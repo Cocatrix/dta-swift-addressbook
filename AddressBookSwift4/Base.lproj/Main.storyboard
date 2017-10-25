@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -40,21 +41,32 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UpN-ai-0Iv">
-                                            <rect key="frame" x="4" y="4" width="286" height="35.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="IPO-CS-KMX">
+                                            <rect key="frame" x="8" y="8" width="110.5" height="27.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="longtext" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UpN-ai-0Iv">
+                                                    <rect key="frame" x="0.0" y="3.5" width="62.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6Y-tA-AGO">
+                                                    <rect key="frame" x="68.5" y="3.5" width="42" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="UpN-ai-0Iv" firstAttribute="leading" secondItem="bzc-gW-UN2" secondAttribute="leading" constant="4" id="LQj-S9-SSY"/>
-                                        <constraint firstAttribute="bottom" secondItem="UpN-ai-0Iv" secondAttribute="bottom" constant="4" id="MVM-Aw-lgr"/>
-                                        <constraint firstAttribute="trailing" secondItem="UpN-ai-0Iv" secondAttribute="trailing" constant="30" id="RPV-QR-faQ"/>
-                                        <constraint firstItem="UpN-ai-0Iv" firstAttribute="top" secondItem="bzc-gW-UN2" secondAttribute="top" constant="4" id="i8M-yb-w0K"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="IPO-CS-KMX" secondAttribute="bottom" id="2ke-t7-iwl"/>
+                                        <constraint firstItem="IPO-CS-KMX" firstAttribute="leading" secondItem="bzc-gW-UN2" secondAttribute="leadingMargin" id="qQz-45-7KN"/>
+                                        <constraint firstItem="IPO-CS-KMX" firstAttribute="top" secondItem="bzc-gW-UN2" secondAttribute="topMargin" id="smr-7B-l6I"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="familyNameLabel" destination="B6Y-tA-AGO" id="CXV-ax-9iY"/>
                                     <outlet property="nameLabel" destination="UpN-ai-0Iv" id="ZJU-z2-hvC"/>
                                 </connections>
                             </tableViewCell>

@@ -18,6 +18,7 @@
 		41EEE5591FA081510008ACC2 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */; };
 		41EEE55C1FA08F720008ACC2 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE55A1FA08F720008ACC2 /* AddViewController.swift */; };
 		41EEE55D1FA08F720008ACC2 /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE55B1FA08F720008ACC2 /* AddViewController.xib */; };
+		41EEE55F1FA09AD60008ACC2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE55E1FA09AD60008ACC2 /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		41EEE55A1FA08F720008ACC2 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		41EEE55B1FA08F720008ACC2 /* AddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
+		41EEE55E1FA09AD60008ACC2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				41EEE5251FA07ED00008ACC2 /* AppDelegate.swift */,
 				41EEE5291FA07ED00008ACC2 /* Main.storyboard */,
+				41EEE55E1FA09AD60008ACC2 /* Person.swift */,
 				41EEE55A1FA08F720008ACC2 /* AddViewController.swift */,
 				41EEE55B1FA08F720008ACC2 /* AddViewController.xib */,
 				41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */,
@@ -272,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41EEE55F1FA09AD60008ACC2 /* Person.swift in Sources */,
 				41EEE55C1FA08F720008ACC2 /* AddViewController.swift in Sources */,
 				41EEE5591FA081510008ACC2 /* ContactTableViewCell.swift in Sources */,
 				41EEE52E1FA07ED00008ACC2 /* AddressBookSwift4.xcdatamodeld in Sources */,

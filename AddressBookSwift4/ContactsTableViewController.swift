@@ -9,7 +9,7 @@
 import UIKit
 
 class ContactsTableViewController: UITableViewController {
-    var persons = [String]()
+    var persons = [Person]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,8 @@ class ContactsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContactTableViewCell", for: indexPath)
         
         if let contactCell = cell as? ContactTableViewCell {
-            contactCell.nameLabel.text = persons[indexPath.row]
+            contactCell.nameLabel.text = persons[indexPath.row].firstName
+            contactCell.familyNameLabel.text = persons[indexPath.row].familyName
         }
 
         return cell
@@ -110,7 +111,7 @@ class ContactsTableViewController: UITableViewController {
 }
 
 extension ContactsTableViewController: AddViewControllerDelegate {
-    func addPerson(newPerson: String) {
+    func addPerson(newPerson: Person) {
         persons.append(newPerson)
         navigationController?.popViewController(animated: true)
         tableView.reloadData()

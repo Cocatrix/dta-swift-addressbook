@@ -9,11 +9,13 @@
 import UIKit
 
 protocol AddViewControllerDelegate: AnyObject {
-    func addPerson(newPerson: String)
+    func addPerson(newPerson: Person)
 }
 
 class AddViewController: UIViewController {
-    @IBOutlet weak var newContactName: UITextField!
+    
+    @IBOutlet weak var newFirstName: UITextField!
+    @IBOutlet weak var newFamilyName: UITextField!
     weak var delegate: AddViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -28,9 +30,9 @@ class AddViewController: UIViewController {
     }
     
     @IBAction func clickedCreateContact(_ sender: Any) {
-        if let newName = newContactName.text {
-            print(newName)
-            delegate?.addPerson(newPerson: newName)
+        if let newFirstName = newFirstName.text, let newFamilyName = newFamilyName.text {
+            let newPerson = Person(firstName: newFirstName, familyName: newFamilyName)
+            delegate?.addPerson(newPerson: newPerson)
         }
     }
     
