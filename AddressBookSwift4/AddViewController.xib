@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddViewController" customModule="AddressBookSwift4" customModuleProvider="target">
             <connections>
+                <outlet property="creatingProgressBar" destination="fys-F0-Rvh" id="rIh-NO-Swt"/>
                 <outlet property="newFamilyName" destination="fqt-JP-XEk" id="mJC-wc-9Tf"/>
                 <outlet property="newFirstName" destination="7AL-o8-o4k" id="3bO-aV-xlR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -35,6 +36,10 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fys-F0-Rvh">
+                    <rect key="frame" x="85" y="283" width="150" height="2"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </progressView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHe-8N-T5f">
                     <rect key="frame" x="101" y="201" width="119" height="46"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
