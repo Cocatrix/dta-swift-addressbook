@@ -83,6 +83,7 @@ class ContactsTableViewController: UITableViewController {
         let detailsVC = DetailsViewController(nibName: nil, bundle: nil)
         detailsVC.person = persons[indexPath.row]
         self.navigationController?.pushViewController(detailsVC, animated: true)
+        detailsVC.delegate = self
     }
     
     /*

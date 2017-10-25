@@ -20,7 +20,6 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         firstNameLabel.text = person?.firstName
         familyNameLabel.text = person?.familyName
         
@@ -29,9 +28,8 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func deleteContactPress() {
-        if let firstName = firstNameLabel.text, let familyName = familyNameLabel.text {
-            let existingPerson = Person(firstName: firstName,familyName: familyName)
-            delegate?.deletePerson(person: existingPerson)
+        if let personToDelete = person {
+            delegate?.deletePerson(person: personToDelete)
         }
     }
     
