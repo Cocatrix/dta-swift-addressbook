@@ -8,6 +8,22 @@
 
 import UIKit
 
+extension ContactsTableViewController: AddViewControllerDelegate {
+    func addPerson(newPerson: Person) {
+        persons.append(newPerson)
+        navigationController?.popViewController(animated: true)
+        tableView.reloadData()
+    }
+}
+
+extension ContactsTableViewController: DetailsViewControllerDelegate {
+    func deletePerson(person: Person) {
+        persons = persons.filter({$0 != person})
+        navigationController?.popViewController(animated: true)
+        tableView.reloadData()
+    }
+}
+
 class ContactsTableViewController: UITableViewController {
     var persons = [Person]()
     
@@ -16,8 +32,8 @@ class ContactsTableViewController: UITableViewController {
         
         self.title = "Mes Contacts"
         
-        persons.append("Thibault")
-        persons.append("Guillaume")
+        persons.append(Person(firstName: "Thibault", familyName: "GOUDOUNEIX"))
+        persons.append(Person(firstName: "Guillaume",familyName: "LAZARO"))
         
         let addContact = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContactPress))
         self.navigationItem.rightBarButtonItem = addContact
@@ -62,7 +78,13 @@ class ContactsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailsVC = DetailsViewController(nibName: nil, bundle: nil)
+        detailsVC.person = persons[indexPath.row]
+        self.navigationController?.pushViewController(detailsVC, animated: true)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -107,18 +129,4 @@ class ContactsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
-
-extension ContactsTableViewController: AddViewControllerDelegate {
-    func addPerson(newPerson: Person) {
-        persons.append(newPerson)
-        navigationController?.popViewController(animated: true)
-        tableView.reloadData()
-    }
-    
-    
-}
-
-
-

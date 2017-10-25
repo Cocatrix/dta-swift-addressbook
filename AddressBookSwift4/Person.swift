@@ -17,3 +17,11 @@ class Person {
         self.familyName = familyName
     }
 }
+
+extension Person: Equatable {
+    static func ==(lhs: Person, rhs: Person) -> Bool {
+        return (lhs.firstName == rhs.firstName && lhs.familyName == rhs.familyName)
+    }
+    
+    
+}

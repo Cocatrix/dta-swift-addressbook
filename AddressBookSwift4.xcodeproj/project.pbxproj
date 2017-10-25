@@ -19,6 +19,8 @@
 		41EEE55C1FA08F720008ACC2 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE55A1FA08F720008ACC2 /* AddViewController.swift */; };
 		41EEE55D1FA08F720008ACC2 /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE55B1FA08F720008ACC2 /* AddViewController.xib */; };
 		41EEE55F1FA09AD60008ACC2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE55E1FA09AD60008ACC2 /* Person.swift */; };
+		41EEE5621FA0AE300008ACC2 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5601FA0AE300008ACC2 /* DetailsViewController.swift */; };
+		41EEE5631FA0AE300008ACC2 /* DetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE5611FA0AE300008ACC2 /* DetailsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		41EEE55A1FA08F720008ACC2 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		41EEE55B1FA08F720008ACC2 /* AddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
 		41EEE55E1FA09AD60008ACC2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		41EEE5601FA0AE300008ACC2 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		41EEE5611FA0AE300008ACC2 /* DetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,8 @@
 			children = (
 				41EEE5251FA07ED00008ACC2 /* AppDelegate.swift */,
 				41EEE5291FA07ED00008ACC2 /* Main.storyboard */,
+				41EEE5601FA0AE300008ACC2 /* DetailsViewController.swift */,
+				41EEE5611FA0AE300008ACC2 /* DetailsViewController.xib */,
 				41EEE55E1FA09AD60008ACC2 /* Person.swift */,
 				41EEE55A1FA08F720008ACC2 /* AddViewController.swift */,
 				41EEE55B1FA08F720008ACC2 /* AddViewController.xib */,
@@ -249,6 +255,7 @@
 			files = (
 				41EEE5331FA07ED00008ACC2 /* LaunchScreen.storyboard in Resources */,
 				41EEE5301FA07ED00008ACC2 /* Assets.xcassets in Resources */,
+				41EEE5631FA0AE300008ACC2 /* DetailsViewController.xib in Resources */,
 				41EEE55D1FA08F720008ACC2 /* AddViewController.xib in Resources */,
 				41EEE52B1FA07ED00008ACC2 /* Main.storyboard in Resources */,
 			);
@@ -279,6 +286,7 @@
 				41EEE55C1FA08F720008ACC2 /* AddViewController.swift in Sources */,
 				41EEE5591FA081510008ACC2 /* ContactTableViewCell.swift in Sources */,
 				41EEE52E1FA07ED00008ACC2 /* AddressBookSwift4.xcdatamodeld in Sources */,
+				41EEE5621FA0AE300008ACC2 /* DetailsViewController.swift in Sources */,
 				41EEE5261FA07ED00008ACC2 /* AppDelegate.swift in Sources */,
 				41EEE5571FA07FBC0008ACC2 /* ContactsTableViewController.swift in Sources */,
 			);
