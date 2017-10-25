@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		41EEE5261FA07ED00008ACC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5251FA07ED00008ACC2 /* AppDelegate.swift */; };
-		41EEE5281FA07ED00008ACC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5271FA07ED00008ACC2 /* ViewController.swift */; };
 		41EEE52B1FA07ED00008ACC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE5291FA07ED00008ACC2 /* Main.storyboard */; };
 		41EEE52E1FA07ED00008ACC2 /* AddressBookSwift4.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE52C1FA07ED00008ACC2 /* AddressBookSwift4.xcdatamodeld */; };
 		41EEE5301FA07ED00008ACC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE52F1FA07ED00008ACC2 /* Assets.xcassets */; };
 		41EEE5331FA07ED00008ACC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE5311FA07ED00008ACC2 /* LaunchScreen.storyboard */; };
 		41EEE53E1FA07ED00008ACC2 /* AddressBookSwift4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE53D1FA07ED00008ACC2 /* AddressBookSwift4Tests.swift */; };
 		41EEE5491FA07ED10008ACC2 /* AddressBookSwift4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5481FA07ED10008ACC2 /* AddressBookSwift4UITests.swift */; };
+		41EEE5571FA07FBC0008ACC2 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5561FA07FBC0008ACC2 /* ContactsTableViewController.swift */; };
+		41EEE5591FA081510008ACC2 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */; };
+		41EEE55C1FA08F720008ACC2 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE55A1FA08F720008ACC2 /* AddViewController.swift */; };
+		41EEE55D1FA08F720008ACC2 /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE55B1FA08F720008ACC2 /* AddViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,6 @@
 /* Begin PBXFileReference section */
 		41EEE5221FA07ED00008ACC2 /* AddressBookSwift4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AddressBookSwift4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41EEE5251FA07ED00008ACC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		41EEE5271FA07ED00008ACC2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		41EEE52A1FA07ED00008ACC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		41EEE52D1FA07ED00008ACC2 /* AddressBookSwift4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddressBookSwift4.xcdatamodel; sourceTree = "<group>"; };
 		41EEE52F1FA07ED00008ACC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,10 @@
 		41EEE5441FA07ED10008ACC2 /* AddressBookSwift4UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddressBookSwift4UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41EEE5481FA07ED10008ACC2 /* AddressBookSwift4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookSwift4UITests.swift; sourceTree = "<group>"; };
 		41EEE54A1FA07ED10008ACC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		41EEE5561FA07FBC0008ACC2 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
+		41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		41EEE55A1FA08F720008ACC2 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		41EEE55B1FA08F720008ACC2 /* AddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +106,11 @@
 			isa = PBXGroup;
 			children = (
 				41EEE5251FA07ED00008ACC2 /* AppDelegate.swift */,
-				41EEE5271FA07ED00008ACC2 /* ViewController.swift */,
 				41EEE5291FA07ED00008ACC2 /* Main.storyboard */,
+				41EEE55A1FA08F720008ACC2 /* AddViewController.swift */,
+				41EEE55B1FA08F720008ACC2 /* AddViewController.xib */,
+				41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */,
+				41EEE5561FA07FBC0008ACC2 /* ContactsTableViewController.swift */,
 				41EEE52F1FA07ED00008ACC2 /* Assets.xcassets */,
 				41EEE5311FA07ED00008ACC2 /* LaunchScreen.storyboard */,
 				41EEE5341FA07ED00008ACC2 /* Info.plist */,
@@ -237,6 +246,7 @@
 			files = (
 				41EEE5331FA07ED00008ACC2 /* LaunchScreen.storyboard in Resources */,
 				41EEE5301FA07ED00008ACC2 /* Assets.xcassets in Resources */,
+				41EEE55D1FA08F720008ACC2 /* AddViewController.xib in Resources */,
 				41EEE52B1FA07ED00008ACC2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,9 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41EEE5281FA07ED00008ACC2 /* ViewController.swift in Sources */,
+				41EEE55C1FA08F720008ACC2 /* AddViewController.swift in Sources */,
+				41EEE5591FA081510008ACC2 /* ContactTableViewCell.swift in Sources */,
 				41EEE52E1FA07ED00008ACC2 /* AddressBookSwift4.xcdatamodeld in Sources */,
 				41EEE5261FA07ED00008ACC2 /* AppDelegate.swift in Sources */,
+				41EEE5571FA07FBC0008ACC2 /* ContactsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
