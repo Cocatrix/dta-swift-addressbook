@@ -21,6 +21,7 @@
 		41EEE55F1FA09AD60008ACC2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE55E1FA09AD60008ACC2 /* Person.swift */; };
 		41EEE5621FA0AE300008ACC2 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EEE5601FA0AE300008ACC2 /* DetailsViewController.swift */; };
 		41EEE5631FA0AE300008ACC2 /* DetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE5611FA0AE300008ACC2 /* DetailsViewController.xib */; };
+		41EEE5651FA0D8720008ACC2 /* names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41EEE5641FA0D3FF0008ACC2 /* names.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		41EEE55E1FA09AD60008ACC2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		41EEE5601FA0AE300008ACC2 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		41EEE5611FA0AE300008ACC2 /* DetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsViewController.xib; sourceTree = "<group>"; };
+		41EEE5641FA0D3FF0008ACC2 /* names.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = names.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				41EEE5601FA0AE300008ACC2 /* DetailsViewController.swift */,
 				41EEE5611FA0AE300008ACC2 /* DetailsViewController.xib */,
 				41EEE55E1FA09AD60008ACC2 /* Person.swift */,
+				41EEE5641FA0D3FF0008ACC2 /* names.plist */,
 				41EEE55A1FA08F720008ACC2 /* AddViewController.swift */,
 				41EEE55B1FA08F720008ACC2 /* AddViewController.xib */,
 				41EEE5581FA081510008ACC2 /* ContactTableViewCell.swift */,
@@ -257,6 +260,7 @@
 				41EEE5301FA07ED00008ACC2 /* Assets.xcassets in Resources */,
 				41EEE5631FA0AE300008ACC2 /* DetailsViewController.xib in Resources */,
 				41EEE55D1FA08F720008ACC2 /* AddViewController.xib in Resources */,
+				41EEE5651FA0D8720008ACC2 /* names.plist in Resources */,
 				41EEE52B1FA07ED00008ACC2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

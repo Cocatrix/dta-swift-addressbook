@@ -30,6 +30,22 @@ class ContactsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Importing names from file
+        let namesPList = Bundle.main.path(forResource: "names.plist", ofType: nil)
+        if let namesPath = namesPList {
+            let url = URL(fileURLWithPath: namesPath)
+            let dataArray = NSArray(contentsOf: url)
+            
+            for dict in dataArray! {
+                if let dictionnary = dict as? [String : String] {
+                    let person = Person(firstName: dictionnary["name"]!, familyName: dictionnary["lastname"]!)
+                    persons.append(person)
+                    //print(dictionnary)
+                }
+            }
+ 
+            //print(dataArray)
+        }
         self.title = "Mes Contacts"
         
         persons.append(Person(firstName: "Thibault", familyName: "GOUDOUNEIX"))
