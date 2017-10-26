@@ -29,9 +29,9 @@ extension ContactsTableViewController: AddViewControllerDelegate {
 
 extension ContactsTableViewController: DetailsViewControllerDelegate {
     func deletePerson(person: Person) {
-        // Previous : persons = persons.filter({$0 != person})
-        // TODO - Delete in DB
-        
+        // Deletes given person in DB
+        let context = self.appDelegate().persistentContainer.viewContext
+        context.delete(person)
         // After deleting, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
         reloadDataFromDB()
