@@ -31,11 +31,12 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         let urlGiven = "http://192.168.116.2:3000/persons"
         let imgURL = "http://fandeloup.f.a.pic.centerblog.net/5nccwlok.jpg"
         let url = URL(string: urlGiven)!
-        let request = NSMutableURLRequest(url: url)
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        // TODO - Check that content type line
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
         var stringJSONToSend: String
         stringJSONToSend = ""
-        // TODO - Write in this string
         stringJSONToSend.append("{")
         stringJSONToSend.append("\"id\": \(person.id),")
         stringJSONToSend.append("\"surname\": " + person.firstName! + ",")
@@ -45,7 +46,7 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         
         request.httpBody = stringJSONToSend.data(using: .utf8)
         
-        
+        // TODO - Launch request in task
     }
 }
 
