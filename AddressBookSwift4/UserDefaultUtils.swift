@@ -12,7 +12,23 @@ import UIKit
 
 extension UserDefaults {
     
-    func isFirstLaunch() -> Bool {
-        return false
+    public func isFirstLaunch() -> Bool {
+        return value(forKey: "firstTimeLaunch") as? Bool ?? true
     }
+    
+    public func doFirstLaunch() -> UIAlertController {
+        // Set preferences
+        UserDefaults.standard.set(false, forKey: "firstTimeLaunch")
+        
+        // Create an alert view with welcoming message
+        let alertFirstLaunchController = UIAlertController(title: "Arrivée", message: "Bienvenue dans votre nouvelle appli ! Utile pour gérer ses contacts", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            
+        }
+        alertFirstLaunchController.addAction(okAction)
+        // Return the Alert controller to show it in calling ViewController
+        return alertFirstLaunchController
+        
+    }
+    
 }

@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 
 extension ContactsTableViewController: AddViewControllerDelegate {
+    // Adds a person in the DB (just names now)
     func addPerson(firstName: String, familyName: String) {
-        
         let context = self.appDelegate().persistentContainer.viewContext
         let person = Person(entity: Person.entity(), insertInto: context)
         person.firstName = firstName
@@ -21,7 +21,7 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         } catch {
             print(error.localizedDescription)
         }
-        
+        // After adding, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
         reloadDataFromDB()
     }
@@ -29,30 +29,32 @@ extension ContactsTableViewController: AddViewControllerDelegate {
 
 extension ContactsTableViewController: DetailsViewControllerDelegate {
     func deletePerson(person: Person) {
+        // Previous : persons = persons.filter({$0 != person})
         // TODO - Delete in DB
-        persons = persons.filter({$0 != person})
+        
+        // After deleting, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
         reloadDataFromDB()
     }
 }
 
 class ContactsTableViewController: UITableViewController {
-    var persons = [Person]()
+    var persons = [Person]() // Useful for displaying persons from DB
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Checking whether it is the first time app launch
-        let value = UserDefaults.standard.value(forKey: "firstTimeLaunch") as? Bool ?? true
-        if(value) {
-            self.doFirstLaunch()
-        }
-        
         self.title = "Mes Contacts"
         
-        // Test : adding from file (in DB)
+        // Checking whether it is the first time app launch
+        if UserDefaults.standard.isFirstLaunch() {
+            let alertFirstLaunchController = UserDefaults.standard.doFirstLaunch()
+            self.present(alertFirstLaunchController, animated: true)
+        }
+        
+        // Adding from file (in DB)
         self.importFromFile(url: "names.plist")
         
+        // Adding add button in bar
         let addContact = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContactPress))
         self.navigationItem.rightBarButtonItem = addContact
     }
@@ -62,13 +64,16 @@ class ContactsTableViewController: UITableViewController {
     }
     
     func reloadDataFromDB() {
+        /* Doing : fetch request = "select * from Person"
+         * and reload table with result of request
+         */
         let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
         let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
         let sortFamilyName = NSSortDescriptor(key: "familyName", ascending: true)
         fetchRequest.sortDescriptors = [sortFirstName, sortFamilyName]
         
         let context = self.appDelegate().persistentContainer.viewContext
-        // print(try? context.fetch(fetchRequest))
+
         if let personsDB =  try? context.fetch(fetchRequest) {
             persons = personsDB
             self.tableView.reloadData()
