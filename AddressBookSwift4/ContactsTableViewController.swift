@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 extension ContactsTableViewController: AddViewControllerDelegate {
-    // Adds a person in the DB (just names now)
+    // Adds a person in the DB (just by giving names now)
     func addPerson(firstName: String, familyName: String) {
         let context = self.appDelegate().persistentContainer.viewContext
         let person = Person(entity: Person.entity(), insertInto: context)
@@ -79,23 +79,11 @@ class ContactsTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
-    
-    func doFirstLaunch() {
-        // Set preferences
-        UserDefaults.standard.set(false, forKey: "firstTimeLaunch")
-        
-        // Show an alert view with welcoming message
-        let alertFirstLaunchController = UIAlertController(title: "Arrivée", message: "Bienvenue dans votre nouvelle appli ! Utile pour gérer ses contacts", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            
-        }
-        alertFirstLaunchController.addAction(okAction)
-        self.present(alertFirstLaunchController, animated: true)
-    }
-    
+
     @objc func addContactPress() {
-        // Create and push AddViewController
-        // Set the delegate
+        /* Create and push AddViewController
+         * Set the delegate
+         */
         let addVC = AddViewController(nibName: nil, bundle: nil)
         self.navigationController?.pushViewController(addVC, animated: true)
         addVC.delegate = self
@@ -114,7 +102,6 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return persons.count
     }
     
@@ -142,7 +129,7 @@ class ContactsTableViewController: UITableViewController {
     
     func importFromFile(url: String) {
         // Importing names from file
-        // url = "names.plist"
+        // like url = "names.plist"
         let namesPList = Bundle.main.path(forResource: url, ofType: nil)
         if let namesPath = namesPList {
             let url = URL(fileURLWithPath: namesPath)
