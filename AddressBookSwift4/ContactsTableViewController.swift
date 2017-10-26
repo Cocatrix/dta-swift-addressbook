@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WebKit
 
 extension ContactsTableViewController: AddViewControllerDelegate {
     // Adds a person in the DB (just by giving names now)
@@ -23,7 +24,28 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         }
         // After adding, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
-        reloadDataFromDB()
+        //self.addPersonOnServer(person: person)
+    }
+    
+    private func addPersonOnServer(person: Person) {
+        let urlGiven = "http://192.168.116.2:3000/persons"
+        let imgURL = "http://fandeloup.f.a.pic.centerblog.net/5nccwlok.jpg"
+        let url = URL(string: urlGiven)!
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
+        var stringJSONToSend: String
+        stringJSONToSend = ""
+        // TODO - Write in this string
+        stringJSONToSend.append("{")
+        stringJSONToSend.append("\"id\": \(person.id),")
+        stringJSONToSend.append("\"surname\": " + person.firstName! + ",")
+        stringJSONToSend.append("\"lastname\":" + person.familyName! + ",")
+        stringJSONToSend.append("\"pictureUrl\":" + imgURL)
+        stringJSONToSend.append("}")
+        
+        request.httpBody = stringJSONToSend.data(using: .utf8)
+        
+        
     }
 }
 
@@ -34,12 +56,14 @@ extension ContactsTableViewController: DetailsViewControllerDelegate {
         context.delete(person)
         // After deleting, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
-        reloadDataFromDB()
+        // reloadDataFromDB()
     }
 }
 
 class ContactsTableViewController: UITableViewController {
     var persons = [Person]() // Useful for displaying persons from DB
+    
+    var resultController: NSFetchedResultsController<Person>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,15 +76,32 @@ class ContactsTableViewController: UITableViewController {
         }
         
         // Adding from file (in DB)
-        self.importFromFile(url: "names.plist")
+        // self.importFromFile(url: "names.plist")
         
         // Adding add button in bar
         let addContact = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContactPress))
         self.navigationItem.rightBarButtonItem = addContact
+        
+        self.createResultController()
+    }
+    
+    func createResultController () {
+        // Setting fetchedResultsController
+        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
+        let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
+        let sortFamilyName = NSSortDescriptor(key: "familyName", ascending: true)
+        fetchRequest.sortDescriptors = [sortFirstName, sortFamilyName]
+        
+        let context = self.appDelegate().persistentContainer.viewContext
+        // sectionNameKeyPath: "firstLetter"
+        resultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        resultController.delegate = self
+        
+         try? resultController.performFetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        reloadDataFromDB()
+        self.appDelegate().updateDataFromServer()
     }
     
     func reloadDataFromDB() {
@@ -94,39 +135,44 @@ class ContactsTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return persons.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactTableViewCell", for: indexPath)
+    func readFromServer(urlGiven: String) {
+        //optional func webView(_ webView: WebView!, decidePolicyForNavigationAction actionInformation: [AnyHashable : Any]!, request: URLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!)
         
-        if let contactCell = cell as? ContactTableViewCell {
-            contactCell.nameLabel.text = persons[indexPath.row].firstName
-            contactCell.familyNameLabel.text = persons[indexPath.row].familyName
+        var urlSession: URLSession!
+        
+        let conf = URLSessionConfiguration.default
+        urlSession = URLSession(configuration: conf)
+        
+        let remoteURL = URL(string: urlGiven)
+        /*
+        let dlTask = urlSession.downloadTask(with: remoteURL! as URL) { location, response, error in
+            if (error == nil) {
+                let res = response as! HTTPURLResponse
+                if (res.statusCode == 200) {
+                    let fileManager = FileManager.default
+                    
+                    var error: NSError = "Error"
+                    if (fileManager.moveItemAtURL(location!, toURL: remoteURL) == false) {
+                        print(error)
+                    }
+                }
+                else {
+                    print(res)
+                    let desc = HTTPURLResponse.localizedStringForStatusCode(res.statusCode);
+                    print(desc)
+                }
+            }
+            else {
+                print(error)
+            }
         }
+        dlTask.resume()
+         */
+        let dlTask = urlSession.dataTask(with: remoteURL!)
+        dlTask.resume()
         
-        return cell
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailsVC = DetailsViewController(nibName: nil, bundle: nil)
-        detailsVC.person = persons[indexPath.row]
-        self.navigationController?.pushViewController(detailsVC, animated: true)
-        detailsVC.delegate = self
-    }
-    
+ 
     func importFromFile(url: String) {
         // Importing names from file
         // like url = "names.plist"
@@ -148,9 +194,12 @@ class ContactsTableViewController: UITableViewController {
                     }
                 }
             }
-            reloadDataFromDB()
+            // reloadDataFromDB()
         }
     }
+    
+    // MARK: - Table view data source
+    // UPDATE : Corresponding methods in extension NSFetchedResultsControllerDelegate
     
     /*
      // Override to support conditional editing of the table view.
@@ -196,4 +245,73 @@ class ContactsTableViewController: UITableViewController {
      // Pass the selected object to the new view controller.
      }
      */
+}
+
+extension ContactsTableViewController: NSFetchedResultsControllerDelegate {
+    
+    // MARK: - Table view data source
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.reloadData()
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        if let frc = self.resultController {
+            return frc.sections!.count
+        }
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let sections = self.resultController.sections else {
+            fatalError("No sections in fetchedResultsController")
+        }
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Modified from Developer Doc
+        guard let cellPerson = self.resultController?.object(at: indexPath) else {
+            fatalError("Attempt to configure cell without a managed object")
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactTableViewCell", for: indexPath)
+        if let contactCell = cell as? ContactTableViewCell {
+            // .name! is OK because non-optional fields in DB
+            contactCell.nameLabel.text = cellPerson.firstName!
+            contactCell.familyNameLabel.text = cellPerson.familyName!
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sectionInfo = resultController?.sections?[section] else {
+            return nil
+        }
+        return sectionInfo.name
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return resultController?.sectionIndexTitles
+    }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        guard let result = resultController?.section(forSectionIndexTitle: title, at: index) else {
+            fatalError("Unable to locate section for \(title) at index: \(index)")
+        }
+        return result
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailsVC = DetailsViewController(nibName: nil, bundle: nil)
+        detailsVC.person = self.resultController?.object(at: indexPath)
+        self.navigationController?.pushViewController(detailsVC, animated: true)
+        detailsVC.delegate = self
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+     return 80
+     }
 }

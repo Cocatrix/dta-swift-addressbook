@@ -88,6 +88,77 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func updateDataFromServer() {
+        let urlGiven = "http://192.168.116.2:3000/persons"
+        let url = URL(string: urlGiven)!
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+            
+            let dictionnary = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+            
+            guard let jsonDict = dictionnary as? [[String: Any]] else {
+                return
+            }
+            
+            // TODO : Fetch entity from DB, compare IDs
+            /*
+             * USELESS : see update data from json data / Because here, every refresh will put data in DB again
+            let context = self.persistentContainer.viewContext
+            for personDict in jsonDict {
+                let person = Person(entity: Person.entity(), insertInto: context)
+                person.firstName = personDict ["surname"] as? String ?? "DefaultName"
+                person.familyName = personDict ["lastname"] as? String ?? "DefaultName"
+            }
+            try? context.save()
+             */
+            self.updateFromJsonData(json: jsonDict)
+        }
+        task.resume()
+    }
+    
+    func updateFromJsonData(json: [[String: Any]]) {
+        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
+        let context = persistentContainer.viewContext
+        let persons = try! context.fetch(fetchRequest)
+        let personsIDs = persons.map { (person) -> Int32 in
+            return person.id
+        }
+        let serverIDs = json.map { (dict) -> Int in
+            return dict["id"] as? Int ?? 0
+        }
+        
+        // Delete data that is not on server
+        for person in persons {
+            if !serverIDs.contains(Int(person.id)) {
+                context.delete(person)
+            }
+        }
+        
+        // Update or Create
+        for jsonPerson in json {
+            let id = jsonPerson["id"] as? Int ?? 0
+            if let index = personsIDs.index(of: Int32(id)) { // Update
+                persons[index].firstName = jsonPerson["surname"] as? String ?? "ERROR"
+                persons[index].familyName = jsonPerson["lastname"] as? String ?? "ERROR"
+            } else { // Create
+                let person = Person(context: context)
+                person.firstName = jsonPerson["surname"] as? String
+                person.familyName = jsonPerson["lastname"] as? String
+                person.id = Int32(id)
+            }
+        }
+        
+        do {
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            print(error)
+        }
+    }
 
 }
 
@@ -96,6 +167,4 @@ extension UIViewController {
     func appDelegate() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
-    
 }
