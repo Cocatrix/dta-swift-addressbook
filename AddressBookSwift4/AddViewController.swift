@@ -39,9 +39,9 @@ class AddViewController: UIViewController {
         DispatchQueue.global(qos: .userInitiated).async {
             var percent: Float = 0
             while percent < 1 {
-                Thread.sleep(forTimeInterval: 0.3)
+                Thread.sleep(forTimeInterval: 0.02)
                 DispatchQueue.main.async {
-                    self.creatingProgressBar.setProgress(percent + 0.1, animated: true)
+                    self.creatingProgressBar.setProgress(percent + 0.01, animated: true)
                     percent = self.creatingProgressBar.progress
                 }
             }

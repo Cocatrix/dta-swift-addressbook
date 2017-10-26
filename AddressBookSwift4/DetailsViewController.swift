@@ -29,7 +29,16 @@ class DetailsViewController: UIViewController {
     
     @objc func deleteContactPress() {
         if let personToDelete = person {
-            delegate?.deletePerson(person: personToDelete)
+            let alertDeleteController = UIAlertController(title: "Suppression", message: "Voulez-vous vraiment supprimer cette personne?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default) { action in
+                
+            }
+            let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                self.delegate?.deletePerson(person: personToDelete)
+            }
+            alertDeleteController.addAction(cancelAction)
+            alertDeleteController.addAction(okAction)
+            self.present(alertDeleteController, animated: true)
         }
     }
     

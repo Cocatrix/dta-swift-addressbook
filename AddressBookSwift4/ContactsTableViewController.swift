@@ -30,6 +30,12 @@ class ContactsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Checking whether it is the first time app launch
+        let value = UserDefaults.standard.value(forKey: "firstTimeLaunch") as? Bool ?? true
+        if(value) {
+            self.doFirstLaunch()
+        }
+        
         // Importing names from file
         let namesPList = Bundle.main.path(forResource: "names.plist", ofType: nil)
         if let namesPath = namesPList {
@@ -53,6 +59,19 @@ class ContactsTableViewController: UITableViewController {
         
         let addContact = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContactPress))
         self.navigationItem.rightBarButtonItem = addContact
+    }
+    
+    func doFirstLaunch() {
+        // Set preferences
+        UserDefaults.standard.set(false, forKey: "firstTimeLaunch")
+        
+        // Show an alert view with welcoming message
+        let alertFirstLaunchController = UIAlertController(title: "Arrivée", message: "Bienvenue dans votre nouvelle appli ! Utile pour gérer ses contacts", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            
+        }
+        alertFirstLaunchController.addAction(okAction)
+        self.present(alertFirstLaunchController, animated: true)
     }
     
     @objc func addContactPress() {
