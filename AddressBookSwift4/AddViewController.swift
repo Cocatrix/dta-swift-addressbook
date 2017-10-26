@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddViewControllerDelegate: AnyObject {
-    func addPerson(newPerson: Person)
+    func addPerson(firstName: String, familyName: String)
 }
 
 class AddViewController: UIViewController {
@@ -47,8 +47,22 @@ class AddViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 if let newFirstName = self.newFirstName.text, let newFamilyName = self.newFamilyName.text {
+                    /*
                     let newPerson = Person(firstName: newFirstName, familyName: newFamilyName)
                     self.delegate?.addPerson(newPerson: newPerson)
+                     */
+                    self.delegate?.addPerson(firstName: newFirstName, familyName: newFamilyName)
+                    /*
+                    let context = self.appDelegate().persistentContainer.viewContext
+                    let person = Person(entity: Person.entity(), insertInto: context)
+                    person.firstName = newFirstName
+                    person.familyName = newFamilyName
+                    do {
+                        try context.save()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                     */
                 }
             }
         }
