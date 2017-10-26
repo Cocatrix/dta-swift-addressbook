@@ -17,6 +17,11 @@ extension UserDefaults {
     }
     
     public func doFirstLaunch() -> UIAlertController {
+        /*
+         * In preferences, firstTimeLaunch is not set (or true).
+         * We set it at false.
+         * We create an alert view returned to the calling class.
+         */
         // Set preferences
         UserDefaults.standard.set(false, forKey: "firstTimeLaunch")
         
@@ -28,7 +33,5 @@ extension UserDefaults {
         alertFirstLaunchController.addAction(okAction)
         // Return the Alert controller to show it in calling ViewController
         return alertFirstLaunchController
-        
     }
-    
 }
