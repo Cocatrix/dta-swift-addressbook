@@ -28,8 +28,8 @@ extension ContactsTableViewController: AddViewControllerDelegate {
 }
 
 extension ContactsTableViewController: DetailsViewControllerDelegate {
+    // Deletes given person in DB
     func deletePerson(person: Person) {
-        // Deletes given person in DB
         let context = self.appDelegate().persistentContainer.viewContext
         context.delete(person)
         // After deleting, return to contactTable screen and refresh
