@@ -143,10 +143,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let index = personsIDs.index(of: Int32(id)) { // Update
                 persons[index].firstName = jsonPerson["surname"] as? String ?? "ERROR"
                 persons[index].familyName = jsonPerson["lastname"] as? String ?? "ERROR"
+                persons[index].avatarUrl = jsonPerson["pictureUrl"] as? String ?? "ERROR"
             } else { // Create
                 let person = Person(context: context)
                 person.firstName = jsonPerson["surname"] as? String
                 person.familyName = jsonPerson["lastname"] as? String
+                person.avatarUrl = jsonPerson["pictureUrl"] as? String
                 person.id = Int32(id)
             }
         }

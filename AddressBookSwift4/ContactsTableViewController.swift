@@ -12,11 +12,12 @@ import WebKit
 
 extension ContactsTableViewController: AddViewControllerDelegate {
     // Adds a person in the DB (just by giving names now)
-    func addPerson(firstName: String, familyName: String) {
+    func addPerson(firstName: String, familyName: String, avatar: String) {
         let context = self.appDelegate().persistentContainer.viewContext
         let person = Person(entity: Person.entity(), insertInto: context)
         person.firstName = firstName
         person.familyName = familyName
+        person.avatarUrl = avatar
         // Add on server
         self.addPersonOnServer(person: person)
         // Saving context was made in addPersonOnServer
@@ -35,7 +36,8 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         var json = [String: String]()
         json["surname"] = person.firstName
         json["lastname"] = person.familyName
-        json["pictureUrl"] = imgURL
+        json["pictureUrl"] = person.avatarUrl
+        
         let url = URL(string: urlGiven)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -57,12 +59,11 @@ extension ContactsTableViewController: AddViewControllerDelegate {
                 return
             }
             DispatchQueue.main.async {
-                let context = self.appDelegate().persistentContainer.viewContext
                 person.firstName = dict["surname"] as? String
                 person.familyName = dict["lastname"] as? String
+                person.avatarUrl = dict["pictureUrl"] as? String
                 person.id = Int32(dict["id"] as? Int ?? 0)
                 // Already done after in addPerson() above ?
-                
             }
         }
         task.resume()

@@ -6,6 +6,8 @@ target 'AddressBookSwift4' do
   use_frameworks!
 
   # Pods for AddressBookSwift4
+pod 'Kingfisher', '~> 4.0'
+
   target 'AddressBookSwift4Tests' do
     inherit! :search_paths
     # Pods for testing

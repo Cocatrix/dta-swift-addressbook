@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddViewControllerDelegate: AnyObject {
-    func addPerson(firstName: String, familyName: String)
+    func addPerson(firstName: String, familyName: String, avatar: String)
 }
 
 class AddViewController: UIViewController {
@@ -18,6 +18,8 @@ class AddViewController: UIViewController {
     @IBOutlet weak var newFamilyName: UITextField!
     @IBOutlet weak var creatingProgressBar: UIProgressView!
     weak var delegate: AddViewControllerDelegate?
+    
+    var newAvatarURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Lion_d%27Afrique.jpg/1200px-Lion_d%27Afrique.jpg"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,22 +49,7 @@ class AddViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 if let newFirstName = self.newFirstName.text, let newFamilyName = self.newFamilyName.text {
-                    /*
-                    let newPerson = Person(firstName: newFirstName, familyName: newFamilyName)
-                    self.delegate?.addPerson(newPerson: newPerson)
-                     */
-                    self.delegate?.addPerson(firstName: newFirstName, familyName: newFamilyName)
-                    /*
-                    let context = self.appDelegate().persistentContainer.viewContext
-                    let person = Person(entity: Person.entity(), insertInto: context)
-                    person.firstName = newFirstName
-                    person.familyName = newFamilyName
-                    do {
-                        try context.save()
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                     */
+                    self.delegate?.addPerson(firstName: newFirstName, familyName: newFamilyName, avatar: self.newAvatarURL)
                 }
             }
         }

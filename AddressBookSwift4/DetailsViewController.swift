@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol DetailsViewControllerDelegate: AnyObject {
     func deletePerson(person: Person)
@@ -15,6 +16,7 @@ protocol DetailsViewControllerDelegate: AnyObject {
 class DetailsViewController: UIViewController {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var familyNameLabel: UILabel!
+    @IBOutlet weak var avatar: UIImageView!
     weak var person: Person?
     weak var delegate:DetailsViewControllerDelegate?
     
@@ -22,6 +24,13 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         firstNameLabel.text = person?.firstName
         familyNameLabel.text = person?.familyName
+        
+        // Download URL, put it in cache
+        guard let avatarImage = person?.avatarUrl, let url = URL(string: avatarImage) else {
+            print("Error")
+            return
+        }
+        avatar.kf.setImage(with: url)
         
         let deleteContact = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteContactPress))
         self.navigationItem.rightBarButtonItem = deleteContact

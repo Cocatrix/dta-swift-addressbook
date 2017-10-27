@@ -1,0 +1,6 @@
+framework module Pods_AddressBookSwift4Tests {
+  umbrella header "Pods-AddressBookSwift4Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
