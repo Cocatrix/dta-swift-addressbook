@@ -19,7 +19,12 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         person.familyName = familyName
         // Add on server
         self.addPersonOnServer(person: person)
-        
+        // Saving context was made in addPersonOnServer
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
         // After adding, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
         
@@ -57,11 +62,7 @@ extension ContactsTableViewController: AddViewControllerDelegate {
                 person.familyName = dict["lastname"] as? String
                 person.id = Int32(dict["id"] as? Int ?? 0)
                 // Already done after in addPerson() above ?
-                do {
-                    try context.save()
-                } catch {
-                    print(error.localizedDescription)
-                }
+                
             }
         }
         task.resume()

@@ -65,6 +65,7 @@
                                         <constraint firstItem="IPO-CS-KMX" firstAttribute="top" secondItem="bzc-gW-UN2" secondAttribute="topMargin" id="smr-7B-l6I"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="familyNameLabel" destination="B6Y-tA-AGO" id="CXV-ax-9iY"/>
                                     <outlet property="nameLabel" destination="UpN-ai-0Iv" id="ZJU-z2-hvC"/>
