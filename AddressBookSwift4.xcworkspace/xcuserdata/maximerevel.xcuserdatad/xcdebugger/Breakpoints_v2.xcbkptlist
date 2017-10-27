@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AddressBookSwift4/DetailsViewController.swift"
-            timestampString = "530810305.138906"
+            timestampString = "530810567.542145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AddressBookSwift4/AppDelegate.swift"
-            timestampString = "530810305.138981"
+            timestampString = "530810567.542251"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "updateFromJsonData(json:)"
             landmarkType = "7">
          </BreakpointContent>

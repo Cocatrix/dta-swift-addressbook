@@ -103,17 +103,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             
-            // TODO : Fetch entity from DB, compare IDs
-            /*
-             * USELESS : see update data from json data / Because here, every refresh will put data in DB again
-            let context = self.persistentContainer.viewContext
-            for personDict in jsonDict {
-                let person = Person(entity: Person.entity(), insertInto: context)
-                person.firstName = personDict ["surname"] as? String ?? "DefaultName"
-                person.familyName = personDict ["lastname"] as? String ?? "DefaultName"
-            }
-            try? context.save()
-             */
             self.updateFromJsonData(json: jsonDict)
         }
         task.resume()

@@ -32,19 +32,20 @@ extension ContactsTableViewController: AddViewControllerDelegate {
     }
     
     private func addPersonOnServer(person: Person) {
-        
+        // Create JSON dictionnary to put it on server
         var json = [String: String]()
         json["surname"] = person.firstName
         json["lastname"] = person.familyName
         json["pictureUrl"] = person.avatarUrl
         
+        // Create the HTTP request
         let url = URL(string: urlGiven)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         
+        // Launch the POST request task in background
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
                 print("error = ");print(error ?? "")
@@ -63,7 +64,6 @@ extension ContactsTableViewController: AddViewControllerDelegate {
                 person.familyName = dict["lastname"] as? String
                 person.avatarUrl = dict["pictureUrl"] as? String
                 person.id = Int32(dict["id"] as? Int ?? 0)
-                // Already done after in addPerson() above ?
             }
         }
         task.resume()
@@ -81,7 +81,7 @@ extension ContactsTableViewController: DetailsViewControllerDelegate {
     }
     
     func deleteOnServer(person: Person) {
-        
+        // Launch the DELETE request task in background
         let url = URL(string: urlGiven + "/" + String(person.id))!
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
@@ -110,8 +110,8 @@ class ContactsTableViewController: UITableViewController {
     
     var resultController: NSFetchedResultsController<Person>!
     
-    var urlGiven = "http://192.168.116.2:3000/persons"
-    let imgURL = "http://fandeloup.f.a.pic.centerblog.net/5nccwlok.jpg"
+    var urlGiven = "http://192.168.116.2:3000/persons" // Server's URL
+    let imgURL = "http://fandeloup.f.a.pic.centerblog.net/5nccwlok.jpg" // Default URL for new Persons
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,25 +123,28 @@ class ContactsTableViewController: UITableViewController {
             self.present(alertFirstLaunchController, animated: true)
         }
         
-        // Adding from file (in DB)
+        // We can add persons from file (in local DB at least)
         // self.importFromFile(url: "names.plist")
         
         // Adding add button in bar
         let addContact = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContactPress))
         self.navigationItem.rightBarButtonItem = addContact
         
+        // Create a Fetch Result Controller that looks at DB changes, make it easier to refresh
         self.createResultController()
     }
     
     func createResultController () {
-        // Setting fetchedResultsController
+        /*
+         * Setting fetchedResultsController, with initial sorting
+         */
         let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
         let sortFirstName = NSSortDescriptor(key: "firstName", ascending: true)
         let sortFamilyName = NSSortDescriptor(key: "familyName", ascending: true)
         fetchRequest.sortDescriptors = [sortFirstName, sortFamilyName]
         
         let context = self.appDelegate().persistentContainer.viewContext
-        // sectionNameKeyPath: "firstLetter"
+        // TODO - Could implement : sectionNameKeyPath: "firstLetter" (to categorize by first letters...)
         resultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         resultController.delegate = self
         
@@ -149,6 +152,7 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // On first launch, call server to refresh
         self.appDelegate().updateDataFromServer()
     }
     
@@ -183,44 +187,6 @@ class ContactsTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func readFromServer(urlGiven: String) {
-        //optional func webView(_ webView: WebView!, decidePolicyForNavigationAction actionInformation: [AnyHashable : Any]!, request: URLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!)
-        
-        var urlSession: URLSession!
-        
-        let conf = URLSessionConfiguration.default
-        urlSession = URLSession(configuration: conf)
-        
-        let remoteURL = URL(string: urlGiven)
-        /*
-         let dlTask = urlSession.downloadTask(with: remoteURL! as URL) { location, response, error in
-         if (error == nil) {
-         let res = response as! HTTPURLResponse
-         if (res.statusCode == 200) {
-         let fileManager = FileManager.default
-         
-         var error: NSError = "Error"
-         if (fileManager.moveItemAtURL(location!, toURL: remoteURL) == false) {
-         print(error)
-         }
-         }
-         else {
-         print(res)
-         let desc = HTTPURLResponse.localizedStringForStatusCode(res.statusCode);
-         print(desc)
-         }
-         }
-         else {
-         print(error)
-         }
-         }
-         dlTask.resume()
-         */
-        let dlTask = urlSession.dataTask(with: remoteURL!)
-        dlTask.resume()
-        
-    }
-    
     func importFromFile(url: String) {
         // Importing names from file
         // like url = "names.plist"
@@ -242,12 +208,12 @@ class ContactsTableViewController: UITableViewController {
                     }
                 }
             }
-            // reloadDataFromDB()
         }
     }
     
     // MARK: - Table view data source
     // UPDATE : Corresponding methods in extension NSFetchedResultsControllerDelegate
+    //     The ones that are not implemented there are kept here (written by default)
     
     /*
      // Override to support conditional editing of the table view.
