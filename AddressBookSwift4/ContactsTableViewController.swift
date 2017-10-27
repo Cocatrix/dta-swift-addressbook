@@ -17,36 +17,54 @@ extension ContactsTableViewController: AddViewControllerDelegate {
         let person = Person(entity: Person.entity(), insertInto: context)
         person.firstName = firstName
         person.familyName = familyName
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
+        // Add on server
+        self.addPersonOnServer(person: person)
+        
         // After adding, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
-        //self.addPersonOnServer(person: person)
+        
     }
     
     private func addPersonOnServer(person: Person) {
-        let urlGiven = "http://192.168.116.2:3000/persons"
-        let imgURL = "http://fandeloup.f.a.pic.centerblog.net/5nccwlok.jpg"
+        
+        var json = [String: String]()
+        json["surname"] = person.firstName
+        json["lastname"] = person.familyName
+        json["pictureUrl"] = imgURL
         let url = URL(string: urlGiven)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        // TODO - Check that content type line
-        request.setValue("application/json", forHTTPHeaderField: "Content-type")
-        var stringJSONToSend: String
-        stringJSONToSend = ""
-        stringJSONToSend.append("{")
-        stringJSONToSend.append("\"id\": \(person.id),")
-        stringJSONToSend.append("\"surname\": " + person.firstName! + ",")
-        stringJSONToSend.append("\"lastname\":" + person.familyName! + ",")
-        stringJSONToSend.append("\"pictureUrl\":" + imgURL)
-        stringJSONToSend.append("}")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        request.httpBody = stringJSONToSend.data(using: .utf8)
+        request.httpBody = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         
-        // TODO - Launch request in task
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                print("error = ");print(error ?? "")
+                return
+            }
+            guard let data = data else {
+                return
+            }
+            
+            let jsonDict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: Any]
+            guard let dict = jsonDict as? [String:Any] else {
+                return
+            }
+            DispatchQueue.main.async {
+                let context = self.appDelegate().persistentContainer.viewContext
+                person.firstName = dict["surname"] as? String
+                person.familyName = dict["lastname"] as? String
+                person.id = Int32(dict["id"] as? Int ?? 0)
+                // Already done after in addPerson() above ?
+                do {
+                    try context.save()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        task.resume()
     }
 }
 
@@ -55,9 +73,33 @@ extension ContactsTableViewController: DetailsViewControllerDelegate {
     func deletePerson(person: Person) {
         let context = self.appDelegate().persistentContainer.viewContext
         context.delete(person)
+        self.deleteOnServer(person: person)
         // After deleting, return to contactTable screen and refresh
         navigationController?.popViewController(animated: true)
-        // reloadDataFromDB()
+    }
+    
+    func deleteOnServer(person: Person) {
+        
+        let url = URL(string: urlGiven + "/" + String(person.id))!
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                print("error = ");print(error ?? "")
+                return
+            }
+            DispatchQueue.main.async {
+                let context = self.appDelegate().persistentContainer.viewContext
+                do {
+                    try context.save()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        task.resume()
     }
 }
 
@@ -65,6 +107,9 @@ class ContactsTableViewController: UITableViewController {
     var persons = [Person]() // Useful for displaying persons from DB
     
     var resultController: NSFetchedResultsController<Person>!
+    
+    var urlGiven = "http://192.168.116.2:3000/persons"
+    let imgURL = "http://fandeloup.f.a.pic.centerblog.net/5nccwlok.jpg"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +143,7 @@ class ContactsTableViewController: UITableViewController {
         resultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         resultController.delegate = self
         
-         try? resultController.performFetch()
+        try? resultController.performFetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,13 +160,13 @@ class ContactsTableViewController: UITableViewController {
         fetchRequest.sortDescriptors = [sortFirstName, sortFamilyName]
         
         let context = self.appDelegate().persistentContainer.viewContext
-
+        
         if let personsDB =  try? context.fetch(fetchRequest) {
             persons = personsDB
             self.tableView.reloadData()
         }
     }
-
+    
     @objc func addContactPress() {
         /* Create and push AddViewController
          * Set the delegate
@@ -146,34 +191,34 @@ class ContactsTableViewController: UITableViewController {
         
         let remoteURL = URL(string: urlGiven)
         /*
-        let dlTask = urlSession.downloadTask(with: remoteURL! as URL) { location, response, error in
-            if (error == nil) {
-                let res = response as! HTTPURLResponse
-                if (res.statusCode == 200) {
-                    let fileManager = FileManager.default
-                    
-                    var error: NSError = "Error"
-                    if (fileManager.moveItemAtURL(location!, toURL: remoteURL) == false) {
-                        print(error)
-                    }
-                }
-                else {
-                    print(res)
-                    let desc = HTTPURLResponse.localizedStringForStatusCode(res.statusCode);
-                    print(desc)
-                }
-            }
-            else {
-                print(error)
-            }
-        }
-        dlTask.resume()
+         let dlTask = urlSession.downloadTask(with: remoteURL! as URL) { location, response, error in
+         if (error == nil) {
+         let res = response as! HTTPURLResponse
+         if (res.statusCode == 200) {
+         let fileManager = FileManager.default
+         
+         var error: NSError = "Error"
+         if (fileManager.moveItemAtURL(location!, toURL: remoteURL) == false) {
+         print(error)
+         }
+         }
+         else {
+         print(res)
+         let desc = HTTPURLResponse.localizedStringForStatusCode(res.statusCode);
+         print(desc)
+         }
+         }
+         else {
+         print(error)
+         }
+         }
+         dlTask.resume()
          */
         let dlTask = urlSession.dataTask(with: remoteURL!)
         dlTask.resume()
         
     }
- 
+    
     func importFromFile(url: String) {
         // Importing names from file
         // like url = "names.plist"
@@ -313,6 +358,6 @@ extension ContactsTableViewController: NSFetchedResultsControllerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-     return 80
-     }
+        return 60
+    }
 }
