@@ -34,21 +34,25 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DOm-oV-HEl">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DOm-oV-HEl">
                     <rect key="frame" x="0.0" y="92" width="320" height="240"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="240" id="zCr-B7-jC6"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Yd1-s7-hd4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0ZG-ck-dHK"/>
                 <constraint firstItem="Yd1-s7-hd4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="2GI-hW-H8g"/>
+                <constraint firstItem="DOm-oV-HEl" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2Nh-yY-05B"/>
                 <constraint firstItem="LGU-Al-OGI" firstAttribute="top" secondItem="Yd1-s7-hd4" secondAttribute="bottom" constant="10" id="J7E-IO-nI2"/>
                 <constraint firstItem="Yd1-s7-hd4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LNI-ks-DbZ"/>
+                <constraint firstItem="DOm-oV-HEl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LQ9-Rl-EHK"/>
                 <constraint firstItem="LGU-Al-OGI" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="ROy-De-IrC"/>
                 <constraint firstItem="LGU-Al-OGI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TGE-iR-mnU"/>
                 <constraint firstItem="DOm-oV-HEl" firstAttribute="top" secondItem="LGU-Al-OGI" secondAttribute="bottom" constant="20" id="X52-dL-GH4"/>
                 <constraint firstItem="LGU-Al-OGI" firstAttribute="top" secondItem="Yd1-s7-hd4" secondAttribute="bottom" constant="10" id="hoB-2U-EIV"/>
-                <constraint firstItem="DOm-oV-HEl" firstAttribute="top" secondItem="LGU-Al-OGI" secondAttribute="bottom" constant="20" id="mw3-fX-udB"/>
                 <constraint firstItem="Yd1-s7-hd4" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="nOV-3P-SeM"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
